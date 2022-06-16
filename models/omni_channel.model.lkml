@@ -49,12 +49,12 @@ explore: omni_channel_events {
 }
 
 explore: omni_channel_support_calls {
-  persist_with: new_day
+  # persist_with: new_day 0616
 }
 
 
 explore: customer_transaction_fact {
-  persist_with: new_day
+  # persist_with: new_day
   join: customer_event_fact {
     type: left_outer
     relationship: one_to_one
