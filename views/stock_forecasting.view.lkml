@@ -389,7 +389,7 @@ view: stock_forecasting_input {
 
 view: stock_forecasting_regression {
   derived_table: {
-    datagroup_trigger: weekly
+    datagroup_trigger: monthly #weekly 0616 하나더.
     sql_create:
       CREATE OR REPLACE MODEL ${SQL_TABLE_NAME}
       OPTIONS(model_type='linear_reg'
@@ -412,7 +412,7 @@ view: stock_forecasting_prediction {
       FROM ml.PREDICT(
       MODEL ${stock_forecasting_regression.SQL_TABLE_NAME},
       (SELECT * FROM ${stock_forecasting_input.SQL_TABLE_NAME}));;
-    datagroup_trigger: weekly
+    #datagroup_trigger: weekly
   }
 
   dimension: pk {

@@ -1,6 +1,8 @@
 # If necessary, uncomment the line below to include explore_source.
 # include: "../models/retail_block_model.model.lkml"
 
+# 0616 Datagroup 5개
+
 view: customer_clustering_input {
   view_label: "Customers"
   derived_table: {
@@ -35,7 +37,7 @@ view: customer_clustering_model {
 view: customer_clustering_prediction_base {
   label: "Customer Clusters 👤"
   derived_table: {
-    datagroup_trigger: monthly
+    #datagroup_trigger: monthly
     sql: SELECT * EXCEPT (nearest_centroids_distance) FROM ml.PREDICT(
       MODEL ${customer_clustering_model.SQL_TABLE_NAME},
       (SELECT * FROM ${customer_clustering_input.SQL_TABLE_NAME}));;
@@ -44,7 +46,7 @@ view: customer_clustering_prediction_base {
 
 view: customer_clustering_prediction_aggregates {
   derived_table: {
-    datagroup_trigger: monthly
+    #datagroup_trigger: monthly
     sql: SELECT
       CENTROID_ID,
       AVG(age ) AS average_age,
@@ -60,7 +62,7 @@ view: customer_clustering_prediction_aggregates {
 
 view: customer_clustering_prediction_centroid_ranks {
   derived_table: {
-    datagroup_trigger: monthly
+    #datagroup_trigger: monthly
     sql: SELECT
       centroid_id,
       RANK() OVER (ORDER BY average_age asc) as age_rank,
@@ -73,7 +75,7 @@ view: customer_clustering_prediction_centroid_ranks {
 
 view: customer_clustering_prediction {
   derived_table: {
-    datagroup_trigger: monthly
+    #datagroup_trigger: monthly
     sql: SELECT customer_clustering_prediction_base.*
       ,CASE
         WHEN customer_clustering_prediction_centroid_ranks.age_rank = 1 THEN 'Emerging Millennials 🥑'

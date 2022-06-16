@@ -2,7 +2,8 @@ view: stores {
   label: "Stores 🏪"
 #   sql_table_name: mzcdsc-team-200716.retail.us_stores ;;
   derived_table: {
-    datagroup_trigger: monthly
+    #0616수
+    #datagroup_trigger: monthly
     sql: SELECT * FROM `mzcdsc-team-200716.retail.us_stores` WHERE id IN (SELECT distinct store_id from ${transactions.SQL_TABLE_NAME});;
   }
 

@@ -1,7 +1,7 @@
 view: weather_raw {
   derived_table: {
-    datagroup_trigger: daily
-    partition_keys: ["date"]
+    # datagroup_trigger: daily 0616 4
+    # partition_keys: ["date"]
     # requires ID, latitude, longitude columns in stores table
     # TO DO: update DATE_ADD(,+1 YEAR) with 2020 table once available in BQ public dataset
     sql: SELECT id,date,element,value,mflag,qflag,sflag,time FROM `bigquery-public-data.ghcn_d.ghcnd_202*`
@@ -14,8 +14,8 @@ view: weather_raw {
 
 view: weather_pivoted {
   derived_table: {
-    datagroup_trigger: daily
-    partition_keys: ["date"]
+    # datagroup_trigger: daily
+    # partition_keys: ["date"]
     # requires ID, latitude, longitude columns in stores table
     # TO DO: update DATE_ADD(,+1 YEAR) with 2020 table once available in BQ public dataset
     sql: SELECT date,id
@@ -99,7 +99,7 @@ view: weather_pivoted {
 
 view: distances {
   derived_table: {
-    datagroup_trigger: daily
+    # datagroup_trigger: daily
     sql: SELECT stores.id as store_id
         ,stations.id AS station_id
         ,ST_DISTANCE(ST_GEOGPOINT(stores.longitude,stores.latitude),ST_GEOGPOINT(stations.longitude,stations.latitude)) as dist
@@ -111,9 +111,9 @@ view: distances {
 view: store_weather {
   label: "Store Weather ⛅"
   derived_table: {
-    datagroup_trigger: daily
-    partition_keys: ["date"]
-    cluster_keys: ["store_id"]
+    # datagroup_trigger: daily
+    # partition_keys: ["date"]
+    # cluster_keys: ["store_id"]
     # requires ID, latitude, longitude columns in stores table
     # TO DO: update DATE_ADD(,+1 YEAR) with 2020 table once available in BQ public dataset
     sql: SELECT distances.store_id

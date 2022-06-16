@@ -15,9 +15,10 @@ view: customer_facts {
       FROM ${transactions.SQL_TABLE_NAME} orders
       LEFT JOIN UNNEST(line_items) line_items
       GROUP BY 1 ;;
-    datagroup_trigger: daily
-    partition_keys: ["customer_first_purchase_date"]
-    cluster_keys: ["customer_id"]
+    #0616
+    # datagroup_trigger: daily
+    # partition_keys: ["customer_first_purchase_date"]
+    # cluster_keys: ["customer_id"]
   }
 
   dimension: customer_id {
